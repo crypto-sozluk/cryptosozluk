@@ -1,5 +1,5 @@
 import firebase from '@/firebase';
-import db from '@/db';
+import { longStackSupport } from 'q';
 
 const state = {
     user: {},
@@ -7,26 +7,26 @@ const state = {
 };
 
 const mutations = {
-    setUser(state, user){
-        state.user = user;
-        state.isLoggedIn = true;
+    setUser(state, user) {
+        if (user) {
+            state.user = user;
+            state.isLoggedIn = true;
+        } else {
+            state.user = {};
+            state.isLoggedIn = false;
+        }
     },
 };
 
-// bu kisim firebase baglanmak icin ve kullanici giris yaptıktan sonra neleri alsin
+// giris ve cikis
 const actions = {
-    async login({ commit }) {
+    async login() {
         const provider = new firebase.auth.GoogleAuthProvider();
-        const { user } = await firebase.auth().signInWithPopup(provider);
-        const setUser = {
-            id: user.uid,
-            adi: user.displayName,
-            image: user.photoURL,
-            yaratilis: firebase.firestore.FieldValue.serverTimestamp(),
-        }
-        db.collection('users').doc(setUser.id).set(setUser);
-        commit('setUser', );
+        await firebase.auth().signInWithPopup(provider);
     },
+    async logout() {
+        await firebase.auth().signOut();
+    }
 };
 
 export default {
