@@ -1,4 +1,4 @@
-import { firebaseAction } from 'vuexfire';
+import { firestoreAction } from 'vuexfire';
 import db from '@/db';
 
 const state = {
@@ -6,13 +6,15 @@ const state = {
 };
 
 const actions = {
-    init: firebaseAction(({ bindFirebaseRef }) => {
-        bindFirebaseRef('subs', db.collection('subs'));
+    init: firestoreAction(({ bindFirebaseRef }) => {
+        bindFirebaseRef('subs', db.collection('subscrypto'));
     }),
 };
+
+console.log(actions)
 
 export default {
     namespaced: true,
     state,
-    actions,
+    actions
 };

@@ -24,7 +24,7 @@
                 <figure>
                   <img :src="user.image">
                 </figure>
-                <figcaption>{{user.adi}}</figcaption>
+                <figcaption>{{user.name}}</figcaption>
               </span>
               <a class="button is-primary" @click="logout()">çıkış</a>
             </p>

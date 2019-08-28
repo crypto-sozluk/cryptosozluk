@@ -10,9 +10,9 @@ firebase.auth().onAuthStateChanged((user) => {
         }
         const setUser = {
             id: user.uid,
-            adi: user.displayName,
+            name: user.displayName,
             image: user.photoURL,
-            yaratilis: firebase.firestore.FieldValue.serverTimestamp(),
+            created_at: firebase.firestore.FieldValue.serverTimestamp(),
         };
         db.collection('users').doc(setUser.id).set(setUser);
         store.commit('auth/setUser', setUser);
